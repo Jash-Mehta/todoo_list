@@ -30,8 +30,6 @@ class ObjectBox {
   bool hasData() {
     return _taskBox.count() > 0;
   }
-
-  // Add this new method to add multiple tasks
   void addTasks(List<TaskData> tasks) {
     _taskBox.putMany(tasks);
   }
@@ -39,8 +37,6 @@ class ObjectBox {
   bool deleteTask(int id) {
     return _taskBox.remove(id);
   }
-
-  // Update a task by ID
   void updateTask(int id, TaskData updatedTask) {
     final task = _taskBox.get(id);
     if (task != null) {
