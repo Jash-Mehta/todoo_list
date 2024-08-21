@@ -8,8 +8,6 @@ import 'package:todoo_list/bloc/main_state.dart';
 import 'package:todoo_list/constant/widgetConstant.dart';
 import 'package:todoo_list/helper/object_box.dart';
 import 'package:todoo_list/model/taskData.dart';
-import 'package:todoo_list/objectbox.g.dart';
-import 'package:todoo_list/view/task_form.dart';
 
 class DashboardUI extends StatefulWidget {
   const DashboardUI({super.key});
@@ -34,7 +32,7 @@ class _DashboardUIState extends State<DashboardUI>
 
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabChanged);
-   
+
     loadingstatus = true;
   }
 
@@ -87,10 +85,8 @@ class _DashboardUIState extends State<DashboardUI>
             setState(() {
               loadingstatus = false;
             });
-          
           } else if (state is TaskErrorState) {
             print("Enter in the Error state: ${state.message}");
-          
           }
         },
         child: SafeArea(
@@ -104,7 +100,7 @@ class _DashboardUIState extends State<DashboardUI>
                     child: Padding(
                       padding: const EdgeInsets.only(top: 40.0, left: 20.0),
                       child: Text(
-                        "Today's Task",
+                        "Today's\n Task",
                         style: TextStyle(
                             fontSize: 30.0,
                             color: Theme.of(context).primaryColor,
@@ -113,7 +109,7 @@ class _DashboardUIState extends State<DashboardUI>
                     ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Container(
                       height: 50.0,
                       margin: const EdgeInsets.only(
@@ -155,58 +151,8 @@ class _DashboardUIState extends State<DashboardUI>
                 unselectedLabelColor: Colors.grey[500],
               ),
               loadingstatus
-                  ? Expanded(
-                      child: ListView.builder(
-                        itemCount: 5, // Adjust the number of placeholder items
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 12.0, right: 12.0, top: 15.0),
-                            child: Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!,
-                              highlightColor: Colors.grey[100]!,
-                              child: Card(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                elevation: 4,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              width: double.infinity,
-                                              height: 20,
-                                              color: Colors.white,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 16.0),
-                                      Container(
-                                        width: 24,
-                                        height: 24,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                  ? Center(
+                      child: CircularProgressIndicator(),
                     )
                   : Expanded(
                       child: BlocBuilder<MainBloc, MainState>(
