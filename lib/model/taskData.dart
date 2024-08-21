@@ -3,7 +3,7 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class TaskData {
   @Id()
-  int id = 0;  
+  int id;  
   String? title;
   bool? completed;
 

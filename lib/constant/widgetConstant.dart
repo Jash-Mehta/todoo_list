@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:todoo_list/bloc/main_bloc.dart';
 import 'package:todoo_list/bloc/main_event.dart';
 import 'package:todoo_list/bloc/main_state.dart';
@@ -22,25 +23,8 @@ Widget taskCard(TaskData task, MainBloc _mainBloc) {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        task.title.toString(),
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          decoration: task.completed!
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Transform.scale(
-                  scale: 1.5,
+                  scale: 1.2,
                   child: Checkbox(
                     value: task.completed,
                     onChanged: (bool? value) {
@@ -50,16 +34,37 @@ Widget taskCard(TaskData task, MainBloc _mainBloc) {
                     },
                     activeColor: Theme.of(context).hintColor,
                     checkColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
                   ),
                 ),
-               const SizedBox(height: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            task.title.toString(),
+                            style: GoogleFonts.poppins(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              decoration: task.completed!
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              decorationThickness: 2.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
                 IconButton(
                   icon: const Icon(
                     Icons.edit,
-                    size: 25,
+                    size: 20,
                   ),
                   onPressed: () {
                     showUpdateTaskDialog(context, task, _mainBloc);
@@ -68,7 +73,7 @@ Widget taskCard(TaskData task, MainBloc _mainBloc) {
                 IconButton(
                   icon: const Icon(
                     Icons.delete,
-                    size: 25,
+                    size: 20,
                     color: Colors.red,
                   ),
                   onPressed: () {
@@ -106,7 +111,7 @@ void showAddTaskDialog(BuildContext context, MainBloc _mainBloc) {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              height: 50.0,
+              height: 100.0,
               child: TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Task Name',
@@ -143,7 +148,7 @@ void showAddTaskDialog(BuildContext context, MainBloc _mainBloc) {
 
               Navigator.of(context).pop();
             },
-            child: Text(
+            child: const Text(
               'Save',
               style: TextStyle(color: Colors.white),
             ),
@@ -194,7 +199,7 @@ void showUpdateTaskDialog(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              height: 50.0,
+              height: 100.0,
               child: TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Task Name',

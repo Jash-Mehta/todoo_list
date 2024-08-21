@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:todoo_list/bloc/main_bloc.dart';
 import 'package:todoo_list/bloc/main_event.dart';
@@ -8,6 +9,8 @@ import 'package:todoo_list/bloc/main_state.dart';
 import 'package:todoo_list/constant/widgetConstant.dart';
 import 'package:todoo_list/helper/object_box.dart';
 import 'package:todoo_list/model/taskData.dart';
+import 'package:todoo_list/objectbox.g.dart';
+import 'package:todoo_list/view/task_form.dart';
 
 class DashboardUI extends StatefulWidget {
   const DashboardUI({super.key});
@@ -100,11 +103,9 @@ class _DashboardUIState extends State<DashboardUI>
                     child: Padding(
                       padding: const EdgeInsets.only(top: 40.0, left: 20.0),
                       child: Text(
-                        "Today's\n Task",
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold),
+                        "Today's \nTask",
+                        style: GoogleFonts.poppins(
+                            fontSize: 25.0, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -122,9 +123,10 @@ class _DashboardUIState extends State<DashboardUI>
                             Icon(Icons.add, color: Theme.of(context).hintColor),
                         label: Text(
                           "New Task",
-                          style: TextStyle(
-                              color: Theme.of(context).hintColor,
-                              fontSize: 18.0),
+                          style: GoogleFonts.poppins(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).hintColor),
                         ),
                         style: ElevatedButton.styleFrom(
                             elevation: 0.0,
@@ -151,8 +153,58 @@ class _DashboardUIState extends State<DashboardUI>
                 unselectedLabelColor: Colors.grey[500],
               ),
               loadingstatus
-                  ? Center(
-                      child: CircularProgressIndicator(),
+                  ? Expanded(
+                      child: ListView.builder(
+                        itemCount: 5, // Adjust the number of placeholder items
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                left: 12.0, right: 12.0, top: 15.0),
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Card(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                elevation: 4,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              width: double.infinity,
+                                              height: 20,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(width: 16.0),
+                                      Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     )
                   : Expanded(
                       child: BlocBuilder<MainBloc, MainState>(
